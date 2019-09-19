@@ -5,10 +5,6 @@ import CalendarList from './CalendarList';
 
 const url = 'http://localhost:3005/dates';
 
-/* const emailRegex = RegExp(
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-); */
-
 export default class Calendar extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +16,7 @@ export default class Calendar extends Component {
       time: ''
     };
   }
- 
+
   componentDidMount() {
     fetch(url)
       .then(resp => {
@@ -28,17 +24,13 @@ export default class Calendar extends Component {
           return resp.json();
         }
       })
-      .then(data => { 
-        
+      .then(data => {
         console.log(data);
-        
       })
       .catch(error => {
         console.log('Something went wrong', error);
       });
   }
-
-  
 
   render() {
     return (
