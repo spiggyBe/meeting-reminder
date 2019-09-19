@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #e0e0e0;
+}
+
+form {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+    background-color: #eeeeee;
+  }
+  
+  .inputs {
+    margin: 15px auto;
+    width: 90%;
+    
+  }
+  
+  label {
+    display: block;
+    padding: 15px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 5px;
+    
+    
+  }
+  
+  input.error {
+    border: 1px solid red;   
+  }
+
+  .errorMessage {
+    color: red;
+  }
+
+  button {
+      
+    border-radius: 0px;
+    padding: 5px 15px;
+    background: none;
+    border: 1px solid #607d8b;
+    cursor: pointer;
+    margin-bottom: 15px;
+  }
+  
+  
