@@ -5,46 +5,38 @@ import CalendarList from './CalendarList';
 
 const url = 'http://localhost:3005/dates';
 
-/* const emailRegex = RegExp(
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-); */
-
 export default class Calendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      date: '',
-      time: ''
+      contacts: []
     };
   }
- 
+
   componentDidMount() {
     fetch(url)
-      .then(resp => {
-        if (resp) {
-          return resp.json();
-        }
-      })
-      .then(data => { 
-        
-        console.log(data);
-        
-      })
-      .catch(error => {
-        console.log('Something went wrong', error);
-      });
+    .then(resp => {
+      if(resp.ok) {
+          return resp.json()
+      }
+      
+      throw new Error('Network error!');
+    })
+    .then(dates =>  this.setState({contacts: dates})
+    ) 
+    .catch(error => {
+      console.log('Something went wrong', error);
+    });    
   }
-
   
-
   render() {
+    
     return (
       <>
         <CalendarForm />
-        <CalendarList />
+        <main className="list__container">
+          <CalendarList contacts={this.state.contacts} />
+        </main>
       </>
     );
   }
