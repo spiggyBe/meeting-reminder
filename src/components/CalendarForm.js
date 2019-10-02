@@ -24,23 +24,20 @@ const formValid = ({ errors, ...rest }) => {
 };
 
 class CalendarForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+  state = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    date: '',
+    time: '',
+    errors: {
       firstName: '',
       lastName: '',
       email: '',
       date: '',
-      time: '',
-      errors: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        date: '',
-        time: ''
-      }
-    };
-  }
+      time: ''
+    }
+  };
 
   inputsHandleChange = e => {
     const { name, value } = e.target;
@@ -71,20 +68,28 @@ class CalendarForm extends Component {
     this.setState({ errors, [name]: value });
   };
 
-  resetForm = () => {
-    this.setState({
-      [this.name]: this.value
-    });
-  };
-
   handleSubmit = e => {
     e.preventDefault();
 
     if (formValid(this.state)) {
+      const data = {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        email: this.state.email,
+        date: this.state.date,
+        time: this.state.time
+      };
+      this.props.addContactFromParent(data);
+      this.setState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        date: '',
+        time: ''
+      });
     } else {
       window.alert('FORM INVALID');
     }
-    this.resetForm();
   };
 
   render() {
@@ -102,6 +107,7 @@ class CalendarForm extends Component {
               id='firstName'
               placeholder='Jack'
               onChange={this.inputsHandleChange}
+              value={this.state.firstName}
             />
             {errors.firstName.length > 0 && (
               <span className='errorMessage'>{errors.firstName}</span>
@@ -116,6 +122,7 @@ class CalendarForm extends Component {
               id='lastName'
               placeholder='Daniels'
               onChange={this.inputsHandleChange}
+              value={this.state.lastName}
             />
             {errors.lastName.length > 0 && (
               <span className='errorMessage'>{errors.lastName}</span>
@@ -131,6 +138,7 @@ class CalendarForm extends Component {
               id='email'
               placeholder='jack.daniels@domain.com'
               onChange={this.inputsHandleChange}
+              value={this.state.email}
             />
             {errors.email && (
               <span className='errorMessage'>{errors.email}</span>
@@ -144,6 +152,7 @@ class CalendarForm extends Component {
               id='date'
               placeholder={currentDate()}
               onChange={this.inputsHandleChange}
+              value={this.state.date}
             />
             {errors.date && <span className='errorMessage'>{errors.date}</span>}
           </div>
@@ -155,11 +164,12 @@ class CalendarForm extends Component {
               id='time'
               placeholder={currentTime}
               onChange={this.inputsHandleChange}
+              value={this.state.time}
             />
             {errors.time && <span className='errorMessage'>{errors.time}</span>}
           </div>
           <div className='inputs'>
-            <button type='submit'>Send</button>
+            <button type='submit'>Save</button>
           </div>
         </form>
       </div>

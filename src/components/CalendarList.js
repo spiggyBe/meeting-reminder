@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class CalendarList extends Component {
-  render(){
-  return (
-    <>
-      <h1>jakas tam lista</h1>
-    </>
-  );
+class CalendarList extends React.Component {
+  render() {
+    const { contactsFromParent } = this.props;
+
+    const contactsList = contactsFromParent.map(item => (
+      <li key={item.id}>{item.firstName}</li>
+    ));
+
+    return <ul>{contactsList}</ul>;
   }
-};
+}
+
+export default CalendarList;

@@ -1,43 +1,54 @@
 import React, { Component } from 'react';
-
 import CalendarForm from './CalendarForm';
 import CalendarList from './CalendarList';
 
-const url = 'http://localhost:3005/dates';
+class Calendar extends Component {
+  urlAPI = 'http://localhost:3005/dates';
 
-export default class Calendar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      date: '',
-      time: ''
-    };
+  state = {
+    contacts: []
+  };
+
+  addContact = data => {
+    this.postData(data);
+  };
+
+  postData(data) {
+    fetch(this.urlAPI, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(resp => resp.json())
+      .then(d => {
+        this.setState({
+          contacts: [...this.state.contacts, d]
+        });
+      });
   }
 
   componentDidMount() {
-    fetch(url)
+    fetch(this.urlAPI)
+      .then(resp => resp.json())
       .then(resp => {
-        if (resp) {
-          return resp.json();
-        }
-      })
-      .then(data => {
-        console.log(data);
-      })
-      .catch(error => {
-        console.log('Something went wrong', error);
+        console.log(resp);
+
+        this.setState({
+          contacts: resp
+        });
       });
   }
 
   render() {
     return (
-      <>
-        <CalendarForm />
-        <CalendarList />
-      </>
+      <section>
+        <CalendarForm addContactFromParent={this.addContact} />
+        <CalendarList contactsFromParent={this.state.contacts} />
+      </section>
     );
   }
 }
+
+export default Calendar;
