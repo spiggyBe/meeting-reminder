@@ -5,7 +5,12 @@ class CalendarList extends React.Component {
     const { contactsFromParent } = this.props;
 
     const contactsList = contactsFromParent.map(item => (
-      <li key={item.id}>{item.firstName}</li>
+      <li key={item.id}>
+        {item.firstName} {item.lastName}
+        {', '} {item.email}
+        {', '} {item.time}
+        {', '} {item.date}
+      </li>
     ));
 
     return <ul>{contactsList}</ul>;
